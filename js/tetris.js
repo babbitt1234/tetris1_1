@@ -351,15 +351,14 @@ function newGame(){
     }else{
         interval = setInterval(tick, 100)
     }
-//    interval = setInterval( tick, 500 );
     
-    //bgmスタート
+    //BGMスタート
     $("#bgm").currentTime = 0;
     $("#bgm").get(0).play();
 }
 
 //-----------------------ボタン関係----------------------
-//プレイ一時停止•再開
+//プレイ一時停止•再開ボタン
 $(".pause_button").on('click', function(){
     if($(this).hasClass("clicked")){
         clearInterval(interval);
@@ -368,30 +367,50 @@ $(".pause_button").on('click', function(){
         $(".pause_button").removeClass("clicked");
     }else{
         $(".pause_button").hasClass("");
-        interval = setInterval(tick, 500);
-         $(this).attr('disabled', 'disabled');
+        if($('[name=level]').val() == '1') {
+            interval = setInterval(tick, 500)
+        }else if($('[name=level]').val() == '2') {
+            interval = setInterval(tick, 300)
+        }else{
+            interval = setInterval(tick, 100)
+        }
+        $(this).attr('disabled', 'disabled');
         $(".pause_button").addClass("clicked");
         $('.pause_button').removeAttr('disabled');
     }
 });
 
-//BGM停止•再生
+//BGM停止•再生ボタン
 $(".soundBtn").on('click', function(){
     if($(this).hasClass("clicked")){
         $("#bgm").get(0).pause();
+        $("#rotate_sound").get(0).muted = true;
+        $("#clear_sound").get(0).muted = true;
+        $("#freeze_sound").get(0).muted = true;
+        $("#move_sound").get(0).muted = true;
+        $("#game_over_sound").get(0).muted = true;
         $(".soundBtn").removeClass("clicked");
     }else{
         $(".soundBtn").hasClass("");
         $("#bgm").currentTime = 0;
         $("#bgm").get(0).play();
+        $("#rotate_sound").get(0).muted = false;
+        $("#clear_sound").get(0).muted = false;
+        $("#freeze_sound").get(0).muted = false;
+        $("#move_sound").get(0).muted = false;
+        $("#game_over_sound").get(0).muted = false;
         $(".soundBtn").addClass("clicked");
     }
 });
 
-//new game
+//ゲームスタートボタン
 $('.new_game').on('click', function(){
     newGame();
 });
+
+//$('#re_start').on('click', function(){
+//    newGame();
+//});
 
 //------------------------ゴミ箱-------------------------
 ////scoreテンプレート
