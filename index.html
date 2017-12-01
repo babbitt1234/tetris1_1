@@ -6,117 +6,130 @@
     <link rel='stylesheet' href='style.css'/>
 </head>
 <body>
+<!--レベル選択-->
     <select class='level' name='level'>
         <option value="1" class='level1'>レベル１</option>
         <option value="2" class='level2'>レベル２</option>
         <option value="3" class="level3">レベル３</option>
     </select>
+
+<!--ゲームスタートボタン-->
     <input type="button" value='ゲームスタート' class='new_game'><br>
-<!--    <input type="button" value='やり直す' class='re_start'><br>-->
+ 
+<!--BGM停止・再生ボタン-->
     <input type="button" class="soundBtn clicked" value="BGM停止・再生">
     <audio id="bgm" loop>
         <source src="tetris_bgm.mp3" type="audio/mp3">
     </audio>
+
+<!--プレイ一時停止•再開ボタン-->
     <input type="button" value='プレイ一時停止•再開' class='pause_button clicked'>
+
+<!--スコア-->
     <div class="score">score:<span>0</span></div>
-    <div class="wrapper">
-        <div class="wrapper_left">
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
-            <canvas width='28' height='30' class='canvas_left'></canvas>
+
+<!--盤面•壁-->
+    <div class="wrapper_outer">
+        <div class="wrapper">
+            <div class="wrapper_left">
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+                <canvas width='28' height='30' class='canvas_left'></canvas>
+            </div>
+                <canvas width='600' height='600' class='canvas'></canvas>
+            <div class='wrapper_right'>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+                <canvas width='28' height='30' class='canvas_right'></canvas>
+
+            </div>
         </div>
-            <canvas width='600' height='600' class='canvas'></canvas>
-        <div class='wrapper_right'>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            <canvas width='28' height='30' class='canvas_right'></canvas>
-            
+        <div class="wrapper_bottom">
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
+            <canvas width='28' height='30' class='canvas_bottom'></canvas>
         </div>
     </div>
-    <div class="wrapper_bottom">
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-        <canvas width='28' height='30' class='canvas_bottom'></canvas>
-    </div>
         
-        <!--ブロック回転音-->
-        <audio id="rotate_sound">
-            <source src="rotate.mp3" type="audio/mp3">
-        </audio>
+<!--ブロック回転音-->
+    <audio id="rotate_sound">
+        <source src="rotate.mp3" type="audio/mp3">
+    </audio>
         
-        <!--ブロック消える音-->
-        <audio id="clear_sound">
-            <source src="clear.mp3" type="audio/mp3">
-        </audio>
-        
-         <!--ブロックフリーズ音-->
-        <audio id="freeze_sound">
-            <source src="freeze.mp3" type="audio/mp3">
-        </audio>
-        
-        <!--ブロック移動音-->
-        <audio id="move_sound">
-            <source src="move.mp3" type="audio/mp3">
-        </audio>
-        
-        <!--ゲームオーバー音-->
-        <audio id="game_over_sound">
-            <source src="game_over.mp3" type="audio/mp3">
-        </audio>
-    
+<!--ブロック消える音-->
+    <audio id="clear_sound">
+        <source src="clear.mp3" type="audio/mp3">
+    </audio>
+
+<!--ブロックフリーズ音-->
+    <audio id="freeze_sound">
+        <source src="freeze.mp3" type="audio/mp3">
+    </audio>
+
+<!--ブロック移動音-->
+    <audio id="move_sound">
+        <source src="move.mp3" type="audio/mp3">
+    </audio>
+
+<!--ゲームオーバー音-->
+    <audio id="game_over_sound">
+        <source src="game_over.mp3" type="audio/mp3">
+    </audio>
+
+
     <script
       src="https://code.jquery.com/jquery-3.2.1.js"
       integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -127,13 +140,7 @@
 </body>
 </html>
 
-
-
-
-
-
-
-<!----------------------ゴミ箱------------------------>
+<!------------------------ゴミ箱------------------------>
 
 <!--<input type="button" value='一時停止' id='pause_button'>-->
 <!--<input type="button" value='再開' id='restart_button'>-->
