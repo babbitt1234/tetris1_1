@@ -1,0 +1,50 @@
+.wrapper{
+    display: flex;
+}
+
+.wrapper_left{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper_right{
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper_bottom{
+    display: flex;
+}
+
+.canvas{
+    border: 1px solid black;
+}
+
+
+.canvas_left{
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    background:rgb(91,89,90);
+}
+
+.canvas_right{
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    background:rgb(91,89,90);
+}
+
+.canvas_bottom{
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    background:rgb(91,89,90);
+}
+
+.right_part{
+    display: flex;
+    
+}
+
+
