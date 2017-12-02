@@ -19,7 +19,7 @@
  
 <!--BGM停止・再生ボタン-->
     <input type="button" class="soundBtn clicked" value="BGM停止・再生">
-    <audio id="bgm" preload="none">
+    <audio id="bgm" preload="none" loop>
         <source src="tetris_bgm.mp3" type="audio/mp3">
     </audio>
 
@@ -130,17 +130,7 @@
         <source src="game_over.mp3" type="audio/mp3">
     </audio>
 
-<!--BGMエラー回避（できない！）-->
-    <script>
-        var playPromise = audio.play();
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
-                audio.pause();
-            })
-            .catch(error => {
-            });
-        }
-    </script>
+
     
     <script
       src="https://code.jquery.com/jquery-3.2.1.js"
@@ -154,5 +144,15 @@
 
 <!------------------------ゴミ箱------------------------>
 
-<!--<input type="button" value='一時停止' id='pause_button'>-->
-<!--<input type="button" value='再開' id='restart_button'>-->
+<!--BGMエラー回避-->
+<!--
+<script>
+    var playPromise = audio.play();
+    if (playPromise !== undefined) {
+        playPromise.then(_ => {
+            audio.pause();
+        })
+        .catch(error => {
+        });
+    }
+</script>-->

@@ -33,7 +33,13 @@ var shapes = [
 
 //ブロックの色を定義
 var colors  = [
-    'rgb(115,251,253)', 'rgb(239,131,50)', 'rgb(0,35,244)', 'rgb(255,253,85)', 'rgb(234,50,35)', 'rgb(117,249,76)', 'rgb(234,63,247)'
+    'rgb(115,251,253)',
+    'rgb(239,131,50)',
+    'rgb(0,35,244)',
+    'rgb(255,253,85)',
+    'rgb(234,50,35)',
+    'rgb(117,249,76)',
+    'rgb(234,63,247)'
 ];
 
 //ブロックを上段にセット
@@ -73,8 +79,7 @@ function tick(){
         ++currentY;
     }else{
         freeze();
-        clearLines();
-        line = 0;
+        clearLinesOuter();
         if ( lose ){
             $("#bgm").get(0).pause();
             $("#bgm").get(0).currentTime = 0;
@@ -133,37 +138,49 @@ function rotateLeft( current ){
 }
 
 //揃ったラインのクリア
-var line = 0;
 var score = 0;
-function clearLines(){
-    for ( var y = ROWS - 1; y >= 0; --y ){
-        var rowFilled = true;
-        for ( var x = 0; x < COLS; ++x ){
-            if ( board [ y ][ x ] == 0 ){
-                rowFilled = false;
-                break;
-            }
-        }
-        if ( rowFilled ){
-            
-            for ( var yy = y; yy > 0; --yy ){
-                for ( var x = 0; x < COLS; ++x ){
-                    board[ yy ][ x ] = board[ yy - 1 ][ x ];
+
+function clearLinesOuter(){
+    var line = 0;
+    function clearLines(){
+        for ( var y = ROWS - 1; y >= 0; --y ){
+            var rowFilled = true;
+            for ( var x = 0; x < COLS; ++x ){
+                if ( board [ y ][ x ] == 0 ){
+                    rowFilled = false;
+                    break;
                 }
             }
-            if(line > 0){
-                alert('good!');
+            if ( rowFilled ){
+                for ( var yy = y; yy > 0; --yy ){
+                    for ( var x = 0; x < COLS; ++x ){
+                        board[ yy ][ x ] = board[ yy - 1 ][ x ];
+                    }
+                }
+            
+                score += 100; //1行消すと100点
+                $('.score span').text(score);
+            
+                $("#clear_sound").get(0).volume = 0.2;
+                $("#clear_sound").get(0).play();
+ 
+                ++y;
+                ++line;
             }
-            ++y;
-            ++line;
-            
-            score += 100; //1行消すと100点
-            $('.score span').text(score);
-            
-            $("#clear_sound").get(0).volume = 0.2;
-            $("#clear_sound").get(0).play();
         }
+        return line;
     }
+    
+    clearLines();
+    
+    if(line == 2){
+        alert('good!');
+    }else if(line == 3){
+        alert('very good!');
+    }else if(line == 4){
+        alert('perfect!');
+    }
+    
 }
 
 //if(score > 99){
