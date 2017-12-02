@@ -4,9 +4,10 @@ var lose;
 var interval; //ゲームを実行するタイマーを保持する変数
 var current; //今操作しているブロックの形
 var currentX, currentY; //今操作しているブロックの位置
+
 var cl = console.log;
 
-//ブロックの形（パターン）を定義
+//ブロックの形を定義
 var shapes = [
     //id=0
     [1, 1, 1, 1],
@@ -70,26 +71,28 @@ function init(){
 function tick(){
     if ( valid( 0, 1 ) ) {
         ++currentY;
-    }
-     else{
-         freeze();
-         clearLines();
-         if ( lose ){
+    }else{
+        freeze();
+        clearLines();
+        line = 0;
+        if ( lose ){
             $("#bgm").get(0).pause();
             $("#bgm").get(0).currentTime = 0;
-            setTimeout(function(){
-                $("#freeze_sound").get(0).pause();
-            },500);
+            $("#freeze_sound").get(0).pause();
+            $("#freeze_sound").get(0).currentTime = 0;
             $("#game_over_sound").get(0).volume = 0.2;
-            $("#game_over_sound").get(0).play()
-            setTimeout(function(){
-                $("#game_over_sound").get(0).pause();
-            },2000);
-             
+            $.when(
+                $("#game_over_sound").get(0).play()
+            )
+            .done(function(){
+                alert('game over')
+            });
+            clearInterval(interval);
+            
             return false;
-          }
-         newShape();
-     }
+        }
+        newShape();
+    }
 }
 
 //ブロックをフリーズ
@@ -130,6 +133,7 @@ function rotateLeft( current ){
 }
 
 //揃ったラインのクリア
+var line = 0;
 var score = 0;
 function clearLines(){
     for ( var y = ROWS - 1; y >= 0; --y ){
@@ -141,22 +145,30 @@ function clearLines(){
             }
         }
         if ( rowFilled ){
+            
             for ( var yy = y; yy > 0; --yy ){
                 for ( var x = 0; x < COLS; ++x ){
                     board[ yy ][ x ] = board[ yy - 1 ][ x ];
                 }
             }
+            if(line > 0){
+                alert('good!');
+            }
             ++y;
+            ++line;
             
             score += 100; //1行消すと100点
             $('.score span').text(score);
             
             $("#clear_sound").get(0).volume = 0.2;
             $("#clear_sound").get(0).play();
-            
         }
     }
 }
+
+//if(score > 99){
+//    interval = setInterval(tick, 500);
+//}
 
 //キーボードが押した時の関数
 var count = 0;
@@ -177,13 +189,14 @@ function keyPress( key ){
             }
             $("#move_sound").get(0).volume = 0.2;
             $("#move_sound").get(0).play();
-
+            
             break;
 
         case 'down': //e.keyCode = 40
             if( valid( 0, 1 ) ){
                 ++currentY; 
             }
+            
             break;
             
         case 'rotate_right': //e.keyCode = 40
@@ -193,6 +206,7 @@ function keyPress( key ){
             }
             $("#rotate_sound").get(0).volume = 0.2;
             $("#rotate_sound").get(0).play();
+
             break;
 
         case 'rotate_left': //e.keyCode = 16
@@ -202,6 +216,7 @@ function keyPress( key ){
             }
             $("#rotate_sound").get(0).volume = 0.2;
             $("#rotate_sound").get(0).play();
+            
             break;
 
         case 'next': //e.keyCode = 88
@@ -219,6 +234,7 @@ function keyPress( key ){
             });
             count = 0;
             }
+            
             break;
             return false;
     }
@@ -270,7 +286,6 @@ function newGame(){
     $("#bgm").get(0).play();
 }
 
-//ボタン関係
 //プレイ一時停止•再開ボタン
 $(".pause_button").on('click', function(){
     if($(this).hasClass("clicked")){
@@ -317,25 +332,6 @@ $('.new_game').on('click', function(){
 });
 
 //------------------------ゴミ箱-------------------------
-////scoreテンプレート
-//var score = 0;
-//$('#button').on('click',function(){
-//    score += 100;
-//    $('.score span').text(score);
-//});
 
-////一時停止ボタン
-//$('#pause_button').on('click',function(){
-//    clearInterval(interval);
-//    $(this).attr('disabled', 'disabled');
-//    $('#restart_button').removeAttr('disabled');
-//});
-
-////再開ボタン
-//$('#restart_button').on('click',function(){
-//    interval = setInterval(tick, 500);
-//    $(this).attr('disabled', 'disabled');
-//    $('#pause_button').removeAttr('disabled');
-//});
 
 

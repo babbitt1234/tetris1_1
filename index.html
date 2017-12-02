@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='style.css'/>
 </head>
 <body>
+
 <!--レベル選択-->
     <select class='level' name='level'>
         <option value="1" class='level1'>レベル１</option>
@@ -18,7 +19,7 @@
  
 <!--BGM停止・再生ボタン-->
     <input type="button" class="soundBtn clicked" value="BGM停止・再生">
-    <audio id="bgm" loop>
+    <audio id="bgm" preload="none">
         <source src="tetris_bgm.mp3" type="audio/mp3">
     </audio>
 
@@ -105,31 +106,42 @@
     </div>
         
 <!--ブロック回転音-->
-    <audio id="rotate_sound">
+    <audio id="rotate_sound" preload="none">
         <source src="rotate.mp3" type="audio/mp3">
     </audio>
         
 <!--ブロック消える音-->
-    <audio id="clear_sound">
+    <audio id="clear_sound" preload="none">
         <source src="clear.mp3" type="audio/mp3">
     </audio>
 
 <!--ブロックフリーズ音-->
-    <audio id="freeze_sound">
+    <audio id="freeze_sound" preload="none">
         <source src="freeze.mp3" type="audio/mp3">
     </audio>
 
 <!--ブロック移動音-->
-    <audio id="move_sound">
+    <audio id="move_sound" preload="none">
         <source src="move.mp3" type="audio/mp3">
     </audio>
 
 <!--ゲームオーバー音-->
-    <audio id="game_over_sound">
+    <audio id="game_over_sound" preload="none">
         <source src="game_over.mp3" type="audio/mp3">
     </audio>
 
-
+<!--BGMエラー回避（できない！）-->
+    <script>
+        var playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                audio.pause();
+            })
+            .catch(error => {
+            });
+        }
+    </script>
+    
     <script
       src="https://code.jquery.com/jquery-3.2.1.js"
       integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
