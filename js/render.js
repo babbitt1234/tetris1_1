@@ -23,7 +23,7 @@ function render(){
             }
         }
     }
-    
+
 //操作ブロックを一つずつ描画する
     for ( var y = 0; y < 4; ++y ){
         for ( var x = 0; x < 4; ++x ){

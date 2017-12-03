@@ -2,7 +2,7 @@ var COLS = 20, ROWS = 20;
 var board = [];
 var lose;
 var interval; //ゲームを実行するタイマーを保持する変数
-var current; //今操作しているブロックの形
+var current = [];
 var currentX, currentY; //今操作しているブロックの位置
 
 var cl = console.log;
@@ -42,26 +42,46 @@ var colors  = [
     'rgb(234,63,247)'
 ];
 
+//次のブロック
+var imgs  = [
+    'img/blue.png',
+    'img/green.png',
+    'img/orange.png',
+    'img/purple.png',
+    'img/red.png',
+    'img/waterblue.png',
+    'img/yellow.png',
+];
+
 //ブロックを上段にセット
-function newShape(){
-    var id = Math.floor( Math.random() * shapes.length );
-    var shape = shapes[ id ]; //id=0だったら[1, 1, 1, 1]
-    current = [];
-    for ( var y = 0; y < 4; ++y ){
-        current[ y ] = [];
-        for ( var x = 0; x < 4; ++x ){
-            var i = 4 * y + x;
-            if ( typeof shape[ i ] != 'undefined' && shape[ i ] ){
-                current[ y ][ x ] = id + 1;
-            }
-            else {
-                current[ y ][ x ] = 0;
+function newShapeOuter(){
+    function newShape(){
+        var id = Math.floor( Math.random() * shapes.length );
+        var shape = shapes[ id ]; 
+        for ( var y = 0; y < 4; ++y ){
+            current[ y ] = [];
+            for ( var x = 0; x < 4; ++x ){
+                var i = 4 * y + x;
+                if ( typeof shape[ i ] != 'undefined' && shape[ i ] ){
+                    current[ y ][ x ] = id + 1;
+                }
+                else {
+                    current[ y ][ x ] = 0;
+                }
             }
         }
+        currentX = 8;
+        currentY = 0;
     }
-    currentX = 8;
-    currentY = 0;
+    newShape();
+    var randImg = imgs[Math.floor(Math.random() * imgs.length)];
+    $('.next_pic').attr('src', randImg);
 }
+
+
+
+
+
 
 //盤面を空にする
 function init(){
@@ -73,13 +93,33 @@ function init(){
     }
 }
 
+//ブロックを空にする
+function initBlock(){
+    for ( var y = 0; y < 4; ++y ){
+            current[ y ] = [];
+        for ( var x = 0; x < 4; ++x){
+            current[ y ][ x ] = 0;
+        }
+    }
+}
+
 //一定の時間ごとに呼び出される関数
+var speed_up_score = 500;
+var timer = 450;
 function tick(){
     if ( valid( 0, 1 ) ) {
-        ++currentY;
+        ++currentY; 
     }else{
         freeze();
         clearLinesOuter();
+        
+//得点を重ねるとスピードアップ
+        if( score >= speed_up_score ){
+            point(timer);
+            speed_up_score = speed_up_score + 500;
+            timer = timer - 25;
+        }
+        
         if ( lose ){
             $("#bgm").get(0).pause();
             $("#bgm").get(0).currentTime = 0;
@@ -93,10 +133,9 @@ function tick(){
                 alert('game over')
             });
             clearInterval(interval);
-            
             return false;
         }
-        newShape();
+        newShapeOuter();
     }
 }
 
@@ -139,7 +178,6 @@ function rotateLeft( current ){
 
 //揃ったラインのクリア
 var score = 0;
-
 function clearLinesOuter(){
     var line = 0;
     function clearLines(){
@@ -157,13 +195,6 @@ function clearLinesOuter(){
                         board[ yy ][ x ] = board[ yy - 1 ][ x ];
                     }
                 }
-            
-                score += 100; //1行消すと100点
-                $('.score span').text(score);
-            
-                $("#clear_sound").get(0).volume = 0.2;
-                $("#clear_sound").get(0).play();
- 
                 ++y;
                 ++line;
             }
@@ -173,20 +204,45 @@ function clearLinesOuter(){
     
     clearLines();
     
-    if(line == 2){
-        alert('good!');
+    if(line == 1){
+        $("#clear_sound").get(0).volume = 0.2;
+        $("#clear_sound").get(0).play();
+        score += 100;
+        $('.score span').text(score);
+    }else if(line == 2){
+        $("#clear_sound").get(0).volume = 0.2;
+        $("#clear_sound").get(0).play();
+        cl('good!');
+        score += 300;
+        $('.score span').text(score);
     }else if(line == 3){
-        alert('very good!');
+        $("#clear_sound").get(0).volume = 0.2;
+        $("#clear_sound").get(0).play();
+        cl('very good!');
+        score += 600;
+        $('.score span').text(score);
     }else if(line == 4){
-        alert('perfect!');
+        $("#perfect_sound").get(0).volume = 0.2;
+        $("#perfect_sound").get(0).play();
+        cl('perfect!');
+        score += 1000;
+        $('.score span').text(score);
     }
-    
 }
 
-//if(score > 99){
-//    interval = setInterval(tick, 500);
-//}
-
+//スピードアップの関数
+function point(speed){
+    clearInterval(interval);
+    if($('[name=level]').val() == '1') {
+        interval = setInterval(tick, speed)
+    }else if($('[name=level]').val() == '2') {
+        interval = setInterval(tick, speed - 30)
+    }else if($('[name=level]').val() == '3'){
+        interval = setInterval(tick, speed - 30)
+    }
+}
+    
+    
 //キーボードが押した時の関数
 var count = 0;
 function keyPress( key ){
@@ -197,7 +253,6 @@ function keyPress( key ){
             }
             $("#move_sound").get(0).volume = 0.2;
             $("#move_sound").get(0).play();
-
             break;
 
         case 'right': //e.keyCode = 39
@@ -206,14 +261,12 @@ function keyPress( key ){
             }
             $("#move_sound").get(0).volume = 0.2;
             $("#move_sound").get(0).play();
-            
             break;
 
         case 'down': //e.keyCode = 40
             if( valid( 0, 1 ) ){
                 ++currentY; 
             }
-            
             break;
             
         case 'rotate_right': //e.keyCode = 40
@@ -223,35 +276,33 @@ function keyPress( key ){
             }
             $("#rotate_sound").get(0).volume = 0.2;
             $("#rotate_sound").get(0).play();
-
             break;
+           
 
-        case 'rotate_left': //e.keyCode = 16
+        case 'rotate_left': //e.keyCode = 18
             var rotated = rotateLeft( current );
             if ( valid( 0, 0, rotated ) ){
                 current = rotated;
             }
             $("#rotate_sound").get(0).volume = 0.2;
             $("#rotate_sound").get(0).play();
-            
             break;
 
         case 'next': //e.keyCode = 88
-            newShape();
+            newShapeOuter();
             count++;
             if(count == 3){
-            $('.wrapper_outer').animate({zIndex:1},{
-                duration:8000,
-                step:function(now){
-                    $(this).css({transform:'rotate(' + (now * 1800) + 'deg)'});
-                },
-                complete:function(){
-                    $('.wrapper_outer').css('zIndex', 0);
-                }
-            });
-            count = 0;
+                $('.wrapper_outer').animate({zIndex:1},{
+                    duration:8000,
+                    step:function(now){
+                        $(this).css({transform:'rotate(' + (now * 1800) + 'deg)'});
+                    },
+                    complete:function(){
+                        $('.wrapper_outer').css('zIndex', 0);
+                    }
+                });
+                count = 0;
             }
-            
             break;
             return false;
     }
@@ -282,25 +333,6 @@ function valid ( offsetX, offsetY, newCurrent ){
         }
     }
     return true;
-}
-
-//ゲームスタート関数
-function newGame(){
-    clearInterval(interval);
-    init();
-    newShape();
-    lose = false; 
-    if($('[name=level]').val() == '1') {
-        interval = setInterval(tick, 500)
-    }else if($('[name=level]').val() == '2') {
-        interval = setInterval(tick, 300)
-    }else if($('[name=level]').val() == '3'){
-        interval = setInterval(tick, 100)
-    }
-
-    $("#bgm").get(0).volume = 0.2;
-    $("#bgm").get(0).currentTime = 0;
-    $("#bgm").get(0).play();
 }
 
 //プレイ一時停止•再開ボタン
@@ -343,12 +375,56 @@ $(".soundBtn").on('click', function(){
     }
 });
 
+//ゲームスタート関数
+function newGame(speed){
+    clearInterval(interval);
+    init();
+    newShapeOuter();
+    lose = false; 
+    if($('[name=level]').val() == '1') {
+        interval = setInterval(tick, speed)
+    }else if($('[name=level]').val() == '2') {
+        interval = setInterval(tick, speed - 200)
+    }else if($('[name=level]').val() == '3'){
+        interval = setInterval(tick, speed - 400)
+    }
+
+    $("#bgm").get(0).volume = 0.2;
+    $("#bgm").get(0).currentTime = 0;
+    $("#bgm").get(0).play();
+}
+
 //ゲームスタートボタン
 $('.new_game').on('click', function(){
-    newGame();
+    newGame(500);
 });
+
+init();
+initBlock();
+
 
 //------------------------ゴミ箱-------------------------
 
+//function increaseLine(){
+//    for ( var y = ROWS - 1; y >= 0; --y ){
+//        var rowFilled = true;
+//        for ( var x = 0; x < COLS; ++x ){
+//            if ( board [ y ][ x ] == 0 ){
+//                rowFilled = false;
+//                break;
+//            }
+//        }
+//        if ( rowFilled ){
+//            for ( var yy = y; yy > 0; --yy ){
+//                for ( var x = 0; x < COLS; ++x ){
+//                    board[ yy ][ x ] = board[ yy - 1 ][ x ];
+//                }
+//            }
+//            ++y;
+//            ++line;
+//        }
+//    }
+//}
+    
 
 

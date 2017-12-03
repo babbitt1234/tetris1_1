@@ -1,3 +1,23 @@
+.canvas{
+    border: 1px solid black;
+}
+
+.next{
+    border: 1px solid black;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.next_pic{
+    width: 120px;
+    height: 120px;
+
+}
+
 .wrapper{
     display: flex;
 }
@@ -14,10 +34,6 @@
 
 .wrapper_bottom{
     display: flex;
-}
-
-.canvas{
-    border: 1px solid black;
 }
 
 .canvas_left{
@@ -39,10 +55,6 @@
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     background:rgb(91,89,90);
-}
-
-.right_part{
-    display: flex;
 }
 
 

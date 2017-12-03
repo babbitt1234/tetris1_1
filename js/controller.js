@@ -5,7 +5,7 @@ document.body.onkeydown = function( e ){
         39: 'right',
         40: 'down',
         32: 'rotate_right', //spaceキー
-        16: 'rotate_left', //shiftキー
+        18: 'rotate_left', //altキー
         88: 'next'
     };
     
