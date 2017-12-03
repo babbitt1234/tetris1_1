@@ -1,23 +1,9 @@
+/*メイン盤面*/
 .canvas{
     border: 1px solid black;
 }
 
-.next{
-    border: 1px solid black;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center; 
-}
-
-.next_pic{
-    width: 120px;
-    height: 120px;
-
-}
-
+/*壁*/
 .wrapper{
     display: flex;
 }
@@ -33,6 +19,10 @@
 }
 
 .wrapper_bottom{
+    display: flex;
+}
+
+.wrapper_outer_outer{
     display: flex;
 }
 
@@ -57,4 +47,60 @@
     background:rgb(91,89,90);
 }
 
+/*次のブロック*/
+.next{
+    margin: 30px;
+    border: 1px solid black;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
 
+.next_pic{
+    width: 120px;
+    height: 120px;
+}
+
+/*スコア*/
+.score_tittle{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 35px;
+}
+
+.score{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+/*消したライン数*/
+.clear_line_tittle{
+    text-align: center;
+    margin-top: 40px;
+    font-size: 35px;
+}
+
+.clear_line{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 70px;
+    font-size: 20px;
+}
+
+/*ボタン*/
+.start{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.level{
+    margin-bottom: 10px
+}
+
+.buttons{
+    text-align: center;
+    margin:-7px;
+}
