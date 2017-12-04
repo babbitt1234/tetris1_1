@@ -1,4 +1,4 @@
-var COLS = 20, ROWS = 20;
+var COLS = 35, ROWS = 20;
 var board = [];
 var lose;
 var interval; //ゲームを実行するタイマーを保持する変数
@@ -73,7 +73,7 @@ function newShapeOuter(){
                     }
                 }
             }
-            currentX = 8;
+            currentX = 16;
             currentY = 0;
         }
         newShape();
@@ -92,7 +92,7 @@ function newShapeOuter(){
                     }
                 }
             }
-            currentX = 8;
+            currentX = 16;
             currentY = 0;
         }
         newShape2();

@@ -47,9 +47,14 @@
     background:rgb(91,89,90);
 }
 
+.right_part{
+    padding-left: -10px; 
+}
+
 /*次のブロック*/
 .next{
-    margin: 30px;
+    margin-top: 10px;
+    margin-left: 10px;
     border: 1px solid black;
     width: 150px;
     height: 150px;

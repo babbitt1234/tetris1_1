@@ -1,6 +1,6 @@
 var canvas = document.getElementsByClassName( 'canvas' )[ 0 ];
 var ctx = canvas.getContext( '2d' );
-var W = 600, H = 600;
+var W = 1050, H = 600;
 var BLOCK_W = W / COLS, BLOCK_H = H / ROWS;
 
 function drawBlock( x, y ){
@@ -8,7 +8,7 @@ function drawBlock( x, y ){
     ctx.strokeRect( BLOCK_W * x, BLOCK_H * y, BLOCK_W - 1, BLOCK_H - 1);
 }
 
-//盤面と操作ブロックを描写する
+//盤面と操作ブロックを描写する  
 function render(){
     ctx.clearRect( 0, 0, W, H );
     ctx.strokeStyle = 'black';
