@@ -203,8 +203,10 @@ function rotateLeft( current ){
 
 //揃ったラインのクリア
 var score = 0;
+var line = 0;
+var lines = 0;
 function clearLinesOuter(){
-    var line = 0;
+    
     function clearLines(){
         for ( var y = ROWS - 1; y >= 0; --y ){
             var rowFilled = true;
@@ -222,10 +224,10 @@ function clearLinesOuter(){
                 }
                 ++y;
                 ++line;
-                $('.clear_line').text(line);
+                ++lines;
+                $('.clear_line').text(lines);
             }
         }
-        return line;
     }
     
     clearLines();
@@ -254,6 +256,7 @@ function clearLinesOuter(){
         score += 1000;
         $('.score').text(score);
     }
+    line = 0;
 }
 
 //スピードアップの関数
